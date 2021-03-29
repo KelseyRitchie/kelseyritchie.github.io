@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kelsey Ritchie&#39;s Github Site</title>
+    <link>/</link>
+    <description>Recent content on Kelsey Ritchie&#39;s Github Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cleaning up Data </title>
+      <link>/2021/03/29/cleaning-up-data/</link>
+      <pubDate>Mon, 29 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/03/29/cleaning-up-data/</guid>
+      <description>I am going to complete an assignment in which we are cleaning data and using it to prove an objective through the application of code and creating data visuals to come to an overall conclusion.
+library(tidyverse) ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4 ## ✓ tibble 3.0.5 ✓ dplyr 1.0.3 ## ✓ tidyr 1.1.2 ✓ stringr 1.4.0 ## ✓ readr 1.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/first-blog-assignment/</link>
+      <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/first-blog-assignment/</guid>
+      <description>index first post in 2021-03-14-first-blog-assignment — title: author: “Kelsey Ritchie” date: 2021-03-14 — This is my introductory assignment for the overall blog and project. First I have the “about me” page to complete and later on I will be experimenting with certain baseball statistics at the college and MLB level. I will be using up-to-date sports statistics to explore and predict different outcomes with the use of coding and creating graphs to create an overall assumption using visuals.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/2021/03/14/</link>
+      <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/03/14/</guid>
+      <description>index first post in 2021-03-14-first-blog-assignment — title: author: “Kelsey Ritchie” date: 2021-03-14 — This is my introductory assignment for the overall blog and project. First I have the “about me” page to complete and later on I will be experimenting with certain baseball statistics at the college and MLB level. I will be using up-to-date sports statistics to explore and predict different outcomes with the use of coding and creating graphs to create an overall assumption using visuals.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/2021/03/14/</link>
+      <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/03/14/</guid>
+      <description>index first post in 2021-03-14-first-blog-assignment — title: author: “Kelsey Ritchie” date: 2021-03-14 — This is my introductory assignment for the overall blog and project. First I have the “about me” page to complete and later on I will be experimenting with certain baseball statistics at the college and MLB level. I will be using up-to-date sports statistics to explore and predict different outcomes with the use of coding and creating graphs to create an overall assumption using visuals.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>/about/</link>
+      <pubDate>Sun, 14 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @KelseyRitchie/hugo-lithium-theme and modified by Kelsey Ritchie.</description>
+    </item>
+    
+  </channel>
+</rss>
