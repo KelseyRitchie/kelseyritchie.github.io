@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.81.0" />
 
 
-<title>Should Luka Garza be a first-round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site</title>
-<meta property="og:title" content="Should Luka Garza be a first-round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site">
+<title>Should Luka Garza be a First-Round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site</title>
+<meta property="og:title" content="Should Luka Garza be a First-Round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site">
 
 
   <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -62,10 +62,10 @@
 
   <article class="article">
     
-    <span class="article-duration">5 min read</span>
+    <span class="article-duration">6 min read</span>
     
 
-    <h1 class="article-title">Should Luka Garza be a first-round NBA Draft pick?</h1>
+    <h1 class="article-title">Should Luka Garza be a First-Round NBA Draft pick?</h1>
 
     
     <span class="article-date">2021-03-30</span>
@@ -76,7 +76,8 @@
 <script src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>I was doing a little bit of research over the potential draft prospects and I noticed that Luka Garza wasn’t ranked as high as I thought he would be. For those who don’t know, Garza is currently ranked no. 1 in College Men’s Basketball. He is projected to be in the late-first to mid-second round of NBA draft picks. How is it possible that Luka Garza is currently ranked no. 1 in the nation but won’t be a first round NBA draft pick? Hopefully by looking at his statistics we will be able to figure out what skills he might be lacking.</p>
+<p>I was doing a little bit of research over the potential draft prospects and I noticed that Luka Garza wasn’t ranked as high as I thought he would be. For those who don’t know, Garza is currently ranked no. 1 in College Men’s Basketball. He is projected to be in the late-first to mid-second round of NBA draft picks.</p>
+<p>How is it possible that Luka Garza is currently ranked no. 1 in the nation but won’t be a first round NBA draft pick? Hopefully by looking at his statistics we will be able to figure out what skills he might be lacking.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
@@ -96,7 +97,7 @@
 ##   grobY.absoluteGrob      ggplot2</code></pre>
 <pre class="r"><code>library(ggbeeswarm)
 library(ggrepel)</code></pre>
-<p>I have pulled data and filtered it to show the players who have at least 800 minutes played and a 3-Point Field Goal Percentage of at least .4. This data contains the top 57 players that fit into that criteria. I am going to clean up the player names and name the data frame ‘top57’.</p>
+<p>I have pulled some data and filtered it to show the players who have at least 800 minutes played and a 3-Point Field Goal Percentage of at least .4%. This data contains the top 57 players that fit into that criteria. I am going to clean up the player names and name the data frame ‘top57’.</p>
 <pre class="r"><code>top57 &lt;- read_csv(&quot;projectnewdata2020-21.csv&quot;)</code></pre>
 <pre><code>## Warning: Duplicated column names deduplicated: &#39;FG%&#39; =&gt; &#39;FG%_1&#39; [30], &#39;3P%&#39; =&gt;
 ## &#39;3P%_1&#39; [32], &#39;FT%&#39; =&gt; &#39;FT%_1&#39; [33]</code></pre>
@@ -114,7 +115,7 @@ library(ggrepel)</code></pre>
 ## ℹ Use `spec()` for the full column specifications.</code></pre>
 <pre class="r"><code>top57 &lt;- top57 %&gt;%
   mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
-<p>Now that the data is loaded, let’s see how Luka’s 3-point average and 3-point attempts compare to the top 57 players in Men’s College Basketball for the 2020-21 season. I want to get to the bottom of where Luka ranks against other players when we compare these two stats.</p>
+<p>Now that the data is loaded, let’s see how Luka’s 3-point average and 3-point attempts compare to the top 57 players in Men’s College Basketball for the 2020-21 season. I want to get to the bottom of where Ganza ranks against other players. I will also be filtering out Garza’s individual statistics so I can just use the 2020-21 season stats in this comparison. Garza’s individual stats will be called “Garza”.</p>
 <pre class="r"><code>Garza &lt;- top57 %&gt;% filter(Player == &quot;Luka Garza&quot;)
 
 ggplot() + 
@@ -133,8 +134,8 @@ ggplot() +
     )</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-Interestingly enough, Garza is sitting toward the bottom of this scatter plot because he hasn’t gone for as many shots as some of the other top players. He still has a good 3-Point Field Goal Percentage because of his accuracy but there are other players that have taken substantially more shots and made them.</p>
-<p>I am going to make a data frame containing the players from my Top 57 data frame but I am going to filter out all other schools so I can compare Luka Ganza to the players who are in the Power Five schools. ets look at the rebound stats on a dumbbell plot including the Power 5 schools:</p>
+Interestingly enough, Garza is sitting toward the bottom of this scatter plot because he hasn’t gone for as many shots as a majority of the other top players have. He still has a good 3-Point Field Goal Percentage because of his accuracy but there are other players that have taken substantially more shots and made them.</p>
+<p>I am now going to make a data frame containing the players from my Top 57 data frame and I am going to filter out all schools that aren’t in the Power Five. I am doing this so the data isn’t too overwhelming to look at. This new data frame will be called ‘rebounds’.</p>
 <pre class="r"><code>rebounds &lt;- top57 %&gt;%
   group_by(Player, Conf) %&gt;%
   filter(Conf == &quot;Big Ten&quot; | Conf == &quot;ACC&quot; | Conf == &quot;Big 12&quot; | Conf == &quot;Pac-12&quot; | Conf == &quot;SEC&quot;) %&gt;%
@@ -160,8 +161,9 @@ Interestingly enough, Garza is sitting toward the bottom of this scatter plot be
     panel.grid.minor = element_blank()
     )</code></pre>
 <p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
-It’s not incredibly shocking that Garza has the highest number of offensive and defensive rebounds since he has such a broad build and plays extremely rough. His statistics will look good when the NBA is drafting players, but are impressive rebounds enough to secure a spot?</p>
-<p>On this next chart I am going to compare Garza’s total field goals and field goal attempts to the top 57 college players with the size of the bubble representing points. Being able to shoot the ball and make it with accuracy looks good to the NBA so let’s see how he stands out.</p>
+It’s not incredibly shocking that Garza has the highest number of offensive and defensive rebounds since he has such a broad build and plays extremely dirty. His statistics will look good when the NBA is looking at drafting players, but are impressive rebounds enough to secure a spot on a pro team?</p>
+<p>On this next chart, I am going to compare Garza’s total field goals and field goal attempts to the top 57 college players with the size of the bubble representing points. I will also be filtering the data so we can see the names of the top 5 players in this data set.</p>
+<p>The NBA is looking for athletes who have accuracy and consistency, so let’s see how Garza holds up.</p>
 <pre class="r"><code>top &lt;- top57 %&gt;% filter(FG &gt; 175 &amp; FGA &gt; 300)</code></pre>
 <pre class="r"><code>ggplot() + 
   geom_point(
@@ -182,8 +184,9 @@ labs(x=&quot;Total Field Goals&quot;, y=&quot;Total Field Goal Attempts&quot;, t
     plot.subtitle = element_text(size=9), 
     panel.grid.minor = element_blank()
     )</code></pre>
-<p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
-Luka Garza ends up at the top. He has the highest amount of field goals, field goal attempts, and total points.</p>
+<p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Luka Garza has the best stats in Men’s College Basketball, which is why he is currently ranked no. 1 for the 2020-21 season. He has proven that he is incredibly consistent with his shooting, but does he need to take more 3-Point shots to be more of a threat? He has good percentages, but there are other players that have taken more shots. Ganza’s large frame helps him with rebounding, but may not help him when it comes to speed or mobility.</p>
+<p>I think that Luka Garza should absolutley be a prospect for the NBA since he has proven his consistency. However, I would place him in the second-round draft picks purely due to his lack of speed and for not taking as many 3-Point shots.</p>
 
     </div>
   </article>
