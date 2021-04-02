@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.81.0" />
+
+
+<title>Should Luka Garza be a first-round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site</title>
+<meta property="og:title" content="Should Luka Garza be a first-round NBA Draft pick? - Kelsey Ritchie&#39;s Github Site">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/kelseyritchieitchie">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/kelseyritchie">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">Should Luka Garza be a first-round NBA Draft pick?</h1>
+
+    
+    <span class="article-date">2021-03-30</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>I was doing a little bit of research over the potential draft prospects and I noticed that Luka Garza wasn’t ranked as high as I thought he would be. For those who don’t know, Garza is currently ranked no. 1 in College Men’s Basketball. He is projected to be in the late-first to mid-second round of NBA draft picks. How is it possible that Luka Garza is currently ranked no. 1 in the nation but won’t be a first round NBA draft pick? Hopefully by looking at his statistics we will be able to figure out what skills he might be lacking.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.5     ✓ dplyr   1.0.3
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(ggalt)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggalt&#39;:
+##   method                  from   
+##   grid.draw.absoluteGrob  ggplot2
+##   grobHeight.absoluteGrob ggplot2
+##   grobWidth.absoluteGrob  ggplot2
+##   grobX.absoluteGrob      ggplot2
+##   grobY.absoluteGrob      ggplot2</code></pre>
+<pre class="r"><code>library(ggbeeswarm)
+library(ggrepel)</code></pre>
+<p>I have pulled data and filtered it to show the players who have at least 800 minutes played and a 3-Point Field Goal Percentage of at least .4. This data contains the top 57 players that fit into that criteria. I am going to clean up the player names and name the data frame ‘top57’.</p>
+<pre class="r"><code>top57 &lt;- read_csv(&quot;projectnewdata2020-21.csv&quot;)</code></pre>
+<pre><code>## Warning: Duplicated column names deduplicated: &#39;FG%&#39; =&gt; &#39;FG%_1&#39; [30], &#39;3P%&#39; =&gt;
+## &#39;3P%_1&#39; [32], &#39;FT%&#39; =&gt; &#39;FT%_1&#39; [33]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   .default = col_double(),
+##   Player = col_character(),
+##   Class = col_character(),
+##   Season = col_character(),
+##   Pos = col_character(),
+##   School = col_character(),
+##   Conf = col_character()
+## )
+## ℹ Use `spec()` for the full column specifications.</code></pre>
+<pre class="r"><code>top57 &lt;- top57 %&gt;%
+  mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
+<p>Now that the data is loaded, let’s see how Luka’s 3-point average and 3-point attempts compare to the top 57 players in Men’s College Basketball for the 2020-21 season. I want to get to the bottom of where Luka ranks against other players when we compare these two stats.</p>
+<pre class="r"><code>Garza &lt;- top57 %&gt;% filter(Player == &quot;Luka Garza&quot;)
+
+ggplot() + 
+  geom_point(data=top57, aes(x=`3P`, y=`3PA`)) +
+  geom_smooth(data=top57, aes(x=`3P`, y=`3PA`), method=&quot;lm&quot;) +
+  geom_point(data=Garza, aes(x=`3P`, y=`3PA`), color=&quot;green&quot;) +
+  geom_text(aes(x=53, y=100, label=&quot;-Luka Garza&quot;)) +
+  
+ labs(x=&quot;3-Point Field Goals&quot;, y=&quot;3-Point Field Goals Attempted&quot;, title=&quot;Garza isn&#39;t sitting as high as expected&quot;, subtitle=&quot;Garza&#39;s 3-pointers are lower than 42 other top players.&quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=9), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+Interestingly enough, Garza is sitting toward the bottom of this scatter plot because he hasn’t gone for as many shots as some of the other top players. He still has a good 3-Point Field Goal Percentage because of his accuracy but there are other players that have taken substantially more shots and made them.</p>
+<p>I am going to make a data frame containing the players from my Top 57 data frame but I am going to filter out all other schools so I can compare Luka Ganza to the players who are in the Power Five schools. ets look at the rebound stats on a dumbbell plot including the Power 5 schools:</p>
+<pre class="r"><code>rebounds &lt;- top57 %&gt;%
+  group_by(Player, Conf) %&gt;%
+  filter(Conf == &quot;Big Ten&quot; | Conf == &quot;ACC&quot; | Conf == &quot;Big 12&quot; | Conf == &quot;Pac-12&quot; | Conf == &quot;SEC&quot;) %&gt;%
+  summarise(
+    OffensiveRebounds = sum(ORB), 
+    DefensiveRebounds = sum(DRB))</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Player&#39;. You can override using the `.groups` argument.</code></pre>
+<p>Since Luka Garza is a heavier basketball player (6’11" and 265 pounds), I thought it would be interesting to compare his offensive and defensive rebounds against that of the other players on a dumbbell plot. The blue dots are the offensive rebounds and the red dots are the defensive rebounds.</p>
+<pre class="r"><code>ggplot() + 
+  geom_dumbbell(
+    data=rebounds, 
+    aes(y=Player, x=DefensiveRebounds, xend=OffensiveRebounds),
+    size = 1.2,
+    color = &quot;grey&quot;,
+    colour_x = &quot;red&quot;,
+    colour_xend = &quot;blue&quot;) + 
+  labs(x=&quot;Offensive/Defensive Rebounds&quot;, y=&quot;Power Five Players&quot;, title=&quot;Luka Garza has outperformed everyone in rebounds.&quot;, subtitle=&quot;Garza&#39;s numbers are the best in the Power Five.&quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 13, face = &quot;bold&quot;),
+    axis.title = element_text(size = 9), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+It’s not incredibly shocking that Garza has the highest number of offensive and defensive rebounds since he has such a broad build and plays extremely rough. His statistics will look good when the NBA is drafting players, but are impressive rebounds enough to secure a spot?</p>
+<p>On this next chart I am going to compare Garza’s total field goals and field goal attempts to the top 57 college players with the size of the bubble representing points. Being able to shoot the ball and make it with accuracy looks good to the NBA so let’s see how he stands out.</p>
+<pre class="r"><code>top &lt;- top57 %&gt;% filter(FG &gt; 175 &amp; FGA &gt; 300)</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_point(
+    data=top57, 
+    aes(x=`FG`, y=`FGA`, size=PTS), 
+    color=&quot;tan&quot;, 
+    alpha=.5) +
+  geom_vline(xintercept = 175) + 
+  geom_hline(yintercept = 300) + 
+  geom_text_repel(
+    data=top, 
+    aes(x=`FG`, y=`FGA`, label=Player)) +
+labs(x=&quot;Total Field Goals&quot;, y=&quot;Total Field Goal Attempts&quot;, title=&quot;Luka Garza towers over the Top 57&quot;, subtitle=&quot;Garza&#39;s leading the season in field goals and total points scored.  &quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=9), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+Luka Garza ends up at the top. He has the highest amount of field goals, field goal attempts, and total points.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
