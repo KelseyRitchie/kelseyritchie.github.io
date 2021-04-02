@@ -164,7 +164,8 @@ Interestingly enough, Garza is sitting toward the bottom of this scatter plot be
 It’s not incredibly shocking that Garza has the highest number of offensive and defensive rebounds since he has such a broad build and plays extremely dirty. His statistics will look good when the NBA is looking at drafting players, but are impressive rebounds enough to secure a spot on a pro team?</p>
 <p>On this next chart, I am going to compare Garza’s total field goals and field goal attempts to the top 57 college players with the size of the bubble representing points. I will also be filtering the data so we can see the names of the top 5 players in this data set.</p>
 <p>The NBA is looking for athletes who have accuracy and consistency, so let’s see how Garza holds up.</p>
-<pre class="r"><code>top &lt;- top57 %&gt;% filter(FG &gt; 175 &amp; FGA &gt; 300)</code></pre>
+<pre class="r"><code>top &lt;- top57 %&gt;% 
+  filter(FG &gt; 175 &amp; FGA &gt; 300)</code></pre>
 <pre class="r"><code>ggplot() + 
   geom_point(
     data=top57, 
@@ -178,6 +179,7 @@ It’s not incredibly shocking that Garza has the highest number of offensive an
     aes(x=`FG`, y=`FGA`, label=Player)) +
 labs(x=&quot;Total Field Goals&quot;, y=&quot;Total Field Goal Attempts&quot;, title=&quot;Luka Garza towers over the Top 57&quot;, subtitle=&quot;Garza&#39;s leading the season in field goals and total points scored.  &quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
   theme_minimal() +
+  
   theme(
     plot.title = element_text(size = 16, face = &quot;bold&quot;),
     axis.title = element_text(size = 10), 
@@ -185,8 +187,8 @@ labs(x=&quot;Total Field Goals&quot;, y=&quot;Total Field Goal Attempts&quot;, t
     panel.grid.minor = element_blank()
     )</code></pre>
 <p><img src="/2021/03/30/should-luka-garza-be-a-first-round-nba-draft-pick/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>Luka Garza has the best stats in Men’s College Basketball, which is why he is currently ranked no. 1 for the 2020-21 season. He has proven that he is incredibly consistent with his shooting, but does he need to take more 3-Point shots to be more of a threat? He has good percentages, but there are other players that have taken more shots. Ganza’s large frame helps him with rebounding, but may not help him when it comes to speed or mobility.</p>
-<p>I think that Luka Garza should absolutley be a prospect for the NBA since he has proven his consistency. However, I would place him in the second-round draft picks purely due to his lack of speed and for not taking as many 3-Point shots.</p>
+<p>Luka Garza has the best stats in Men’s College Basketball, which is why he is currently ranked no. 1 for the 2020-21 season. He has proven that he is incredibly consistent with his shooting, but does he need to take more 3-Point shots to be more of a threat? He has good percentages, but there are other players that have taken more shots. Garza’s large frame helps him with rebounding, but may not help him when it comes to speed or mobility.</p>
+<p>I think that Luka Garza should absolutely be a prospect for the NBA since he has proven his consistency. However, I would place him in the second-round draft picks purely due to his lack of speed and for not taking as many 3-Point shots.</p>
 
     </div>
   </article>
