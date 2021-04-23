@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.81.0" />
+
+
+<title>Is Brady better than Mahomes? - Kelsey Ritchie&#39;s Github Site</title>
+<meta property="og:title" content="Is Brady better than Mahomes? - Kelsey Ritchie&#39;s Github Site">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/kelseyritchieitchie">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/kelseyritchie">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">Is Brady better than Mahomes?</h1>
+
+    
+    <span class="article-date">2021-04-23</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2021/04/23/is-brady-better-than-mahomes/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>For the 2021 Super Bowl, I had the Chiefs in favor to win since they had won the previous Super Bowl and secured Patrick Mahomes for the next 10 years. To those who have been living under a rock, the Tampa Bay Buccaneers ended up winning the 2021 Super Bowl. This made me question who the better MVP was between Mahomes and Brady. Brady has 10 Super Bowls under his belt, but Mahomes is quickly proving himself to be substantially better than Brady was when he first entered the NFL. To figure out who the true “GOAT” is, I am going to take a look at Brady’s statistics throughout his years and see how they compare to Mahomes’s throughout his four years in Professional Football.</p>
+<pre class="r"><code>library(tidyverse)
+library(ggalt)
+library(ggrepel)</code></pre>
+<pre class="r"><code>QB_2019 &lt;- read_csv(&quot;2019passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2019&quot;)
+QB_2018 &lt;- read_csv(&quot;2018passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2018&quot;)
+QB_2017 &lt;- read_csv(&quot;2017passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2017&quot;)
+QB_2016 &lt;- read_csv(&quot;2016passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2016&quot;)
+QB_2015 &lt;- read_csv(&quot;2015passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2015&quot;)
+QB_2014 &lt;- read_csv(&quot;2014passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2014&quot;)
+QB_2013 &lt;- read_csv(&quot;2013passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2013&quot;)
+QB_2012 &lt;- read_csv(&quot;2012passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2012&quot;)
+QB_2011 &lt;- read_csv(&quot;2011passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2011&quot;)
+QB_2010 &lt;- read_csv(&quot;2010passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2010&quot;)
+QB_2009 &lt;- read_csv(&quot;2009passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2009&quot;)
+QB_2008 &lt;- read_csv(&quot;2008passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2008&quot;)
+QB_2007 &lt;- read_csv(&quot;2007passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2007&quot;)
+QB_2006 &lt;- read_csv(&quot;2006passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2006&quot;)
+QB_2005 &lt;- read_csv(&quot;2005passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2005&quot;)
+QB_2004 &lt;- read_csv(&quot;2004passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2004&quot;)
+QB_2003 &lt;- read_csv(&quot;2003passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2003&quot;)
+QB_2002 &lt;- read_csv(&quot;2002passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2002&quot;)
+QB_2001 &lt;- read_csv(&quot;2001passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2001&quot;)
+QB_2000 &lt;- read_csv(&quot;2000passingdata.csv&quot;) %&gt;% mutate(Season=&quot;2000&quot;)
+mahomes_stats &lt;- read_csv(&quot;PatrickMahomes.csv&quot;) %&gt;% select(-Age)
+brady_stats &lt;- read_csv(&quot;TomBradyallstats.csv&quot;) %&gt;% select(-Age)
+nfl_offense &lt;- read_csv(&quot;TeamoffenseNFL.csv&quot;)
+avg_PerGame_stats &lt;- read_csv(&quot;average_per_game.csv&quot;)
+QB_2020 &lt;- read_csv(&quot;qbs_2020.csv&quot;) %&gt;% mutate(Season=&quot;2020&quot;)
+Top25&lt;- read_csv(&quot;Top25qbs_2020.csv&quot;)</code></pre>
+<pre class="r"><code>QB_2020 &lt;- QB_2020 %&gt;%
+  mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
+<pre class="r"><code>Top25 &lt;- Top25 %&gt;%
+  mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
+<pre class="r"><code>avg_PerGame_stats &lt;- avg_PerGame_stats %&gt;%
+  mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
+<p>Now that the data is loaded and cleaned, I am going use the top 25 ranked quarterbacks from the 2020 season and compare their touchdown percentage and interception percentage on a dumbbell plot. Ideally, a good quarterback will have a low interception percentage and high touchdown percentage. The red dots will represent interceptions and blue will represent touchdowns.</p>
+<pre class="r"><code>intc_td_top25 &lt;- Top25 %&gt;%
+  group_by(Player) %&gt;%
+   summarise(
+    PassingTouchdownPercentage = sum(`TD%`), 
+    PassingInterceptionPercentage = sum(`Int%`)) </code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_dumbbell(
+    data=intc_td_top25, 
+    aes(y=Player, x=PassingInterceptionPercentage, xend=PassingTouchdownPercentage),
+    size = 1.2,
+    color = &quot;grey&quot;,
+    colour_x = &quot;red&quot;,
+    colour_xend = &quot;blue&quot;) +
+labs(x=&quot;Interception/Touchdown Percentage&quot;, y=&quot;Top 25 NFL Quarterbacks&quot;, title=&quot;Brady is worse than half of the top 25 quarterbacks&quot;, subtitle=&quot;Brady&#39;s interception percentage is higher than 13 of the top 25&quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = &quot;bold&quot;),
+    axis.title = element_text(size = 9), 
+    plot.subtitle = element_text(size=10), 
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/04/23/is-brady-better-than-mahomes/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+Interestingly enough, Patrick Mahomes and Aaron Rodgers are tied at 1% for the lowest interception rating in the NFL while Brady is sitting at 2%. When it comes to overall touchdown percentage, Mahomes is a little bit behind Brady but is still in the top five for that statistic.</p>
+<p>Also, yes that is Aaron Rodgers at the bottom of the graph blowing everybody else out of the park in touchdown percentage.</p>
+<p>Since a good quarterback is able to throw well enough to complete a pass, I want to see how the two of them compare when we look at their total passing attempts and completed passes in the 2020 season. Since I will be calculating this in a bubble plot, I am going use each player’s quarterback rating for the size component of their bubble.</p>
+<pre class="r"><code>top &lt;- Top25 %&gt;% 
+  filter(Att == 588 &amp; Cmp == 390)
+topp &lt;- Top25 %&gt;%
+  filter(Att == 610 &amp; Cmp == 401)</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_point(
+    data=Top25, 
+    aes(x=`Att`, y=`Cmp`, size=QBR), 
+    color=&quot;blue&quot;, 
+    alpha=.5) +
+  geom_vline(xintercept = 500) + 
+  geom_hline(yintercept = 325) +
+  geom_text_repel(
+    data=top, 
+    aes(x=`Att`, y=`Cmp`, label=Player)) +
+  geom_text_repel(
+    data=topp, 
+    aes(x=`Att`, y=`Cmp`, label=Player)) +
+  labs(x=&quot;Passing Attempts&quot;, y=&quot;Completed Passes&quot;, title=&quot;Brady&#39;s Pass Completion is actually pretty good&quot;, subtitle=&quot;Brady&#39;s stats are the second best with Matt Ryan at no. 1&quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 15, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=9), 
+    panel.grid.minor = element_blank())</code></pre>
+<p><img src="/2021/04/23/is-brady-better-than-mahomes/index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+As you can see, Tom Brady is actually doing a little bit better than Mahomes in his completed/attempted passing and is sitting at second best for the season.</p>
+<p>Since Tom Brady was drafted into the NFL in the year 2000, I am now combining data that contains all NFL passing statistics dating back to the year 2000 for that specific reason. This is because I am interested in seeing the growth throughout the years in total passing yards.</p>
+<pre class="r"><code>allpassingdata &lt;- bind_rows(QB_2000, QB_2001, QB_2002, QB_2003, QB_2004, QB_2005, QB_2006, QB_2007, QB_2008, QB_2009, QB_2010, QB_2011, QB_2012, QB_2013, QB_2014, QB_2015, QB_2016, QB_2017, QB_2018, QB_2019, QB_2020)</code></pre>
+<pre class="r"><code>allpassingdata &lt;- allpassingdata %&gt;%
+  mutate(Player=gsub(&quot;\\\\.*&quot;,&quot;&quot;,Player))</code></pre>
+<p>This plot is going to analyze all NFL quarterbacks dating back to the year 2000. We are going to put it into a step chart so we can take a look at Tom Brady’s growth throughout the last 20 years and how it compares to other quarterbacks.</p>
+<p>I am going to filter out Mahomes and Tom Brady in this chunk so they are labeled on the graph. Brady will be orange and Mahomes will be red.</p>
+<pre class="r"><code>cumulativepassing &lt;- allpassingdata %&gt;% 
+  mutate(Player = str_trim(gsub(&quot;\\*&quot;,&quot;&quot;, Player))) %&gt;% 
+  group_by(Player) %&gt;% 
+  mutate(CumulativePassingYards = cumsum(Yds))</code></pre>
+<pre class="r"><code>PM &lt;- cumulativepassing %&gt;% filter(Player == &quot;Patrick Mahomes&quot;)
+TB &lt;- cumulativepassing %&gt;% filter(Player == &quot;Tom Brady&quot;)
+PM2020 &lt;- cumulativepassing %&gt;% filter(Player == &quot;Patrick Mahomes&quot;, Season == &quot;2020&quot;)
+TB2020 &lt;- cumulativepassing %&gt;% filter(Player == &quot;Tom Brady&quot;, Season == &quot;2020&quot;)</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_step(data=cumulativepassing, aes(x=Season, y=CumulativePassingYards, group=Player), color=&quot;light grey&quot;) +
+  geom_step(data=PM, aes(x=Season, y=CumulativePassingYards, group=1), color=&quot;red&quot;) + 
+  geom_step(data=TB, aes(x=Season, y=CumulativePassingYards, group=1), color=&quot;orange&quot;) +
+  geom_text_repel(
+    data=PM2020, 
+    aes(x=`Season`, y=`CumulativePassingYards`, label=Player)) +
+  geom_text_repel(
+    data=TB2020, 
+    aes(x=`Season`, y=`CumulativePassingYards`, label=Player)) +
+   labs(x=&quot;Season&quot;, y=&quot;Passing Yards&quot;, title=&quot;Brady has been right behind Manning since 2012&quot;, subtitle=&quot;Mahomes advanced decently fast in his four years of playing&quot;, caption=&quot;Source: Sports Reference | By: Kelsey Ritchie&quot;) + 
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 15, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=9), 
+    panel.grid.minor = element_blank())</code></pre>
+<p><img src="/2021/04/23/is-brady-better-than-mahomes/index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>After taking a look at this chart. It’s a no brainer that Brady has over 50,000 more passing yards than Mahomes. He is 43 and has been playing professionally for about 20 years now. Something interesting about this chart is Mahomes’s growth throughout his first four years. He has racked up 14,152 total passing yards whereas Brady achieved a total of 10,233 passing yards in his first four years.</p>
+<p>In my opinion, it is safe to say that the both of them are exceptional quarterbacks with great numbers, but if Mahomes keeps up his work each year and continues to keep up with around 4500-5000 passing yards a year along with improving his pass completion, he could be labeled as more talented than Tom Brady and go on to win more titles and awards than Brady.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
